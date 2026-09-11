@@ -78,7 +78,6 @@ body {
     bottom: 20px;
     left: 0;
     font-size: 30px;
-    transition: left 0.1s linear;
 }
 
 button {
@@ -101,7 +100,6 @@ button {
     background-color: rgba(102, 252, 241, 0.4);
     border-left: 2px solid #66fcf1;
     border-right: 2px solid #66fcf1;
-    transition: left 0.1s linear; /* Adicione apenas esta linha */
 }
 
 #btn-iniciar { background-color: #45a29e; color: #0b0c10; }
