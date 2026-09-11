@@ -17,8 +17,8 @@ O jogo roda inteiramente no lado do cliente. Não é necessário instalar nenhum
 3. Clique em "Capturar Imagem" quando ele estiver dentro da área verde delimitada.
 4. Coletas fora da área verde desperdiçam uma carga de bateria sem render dados.
 5. O limite operacional é de 5 cargas (tentativas).
-6. Condição de Sucesso (Vitória): Coletar 3 ou mais amostras.
-7. Condição de Falha (Derrota): Coletar menos de 3 amostras.
+6. Condição de Sucesso (Vitória): Coletar 5 amostras em 5 tentativas.
+7. Condição de Falha (Derrota): Errar em qualquer uma das tentativas.
 
 ## Informações do Estudante
 ```json

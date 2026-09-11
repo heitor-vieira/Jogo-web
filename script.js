@@ -8,21 +8,18 @@ const painelBateria = document.getElementById('bateria');
 const avisoStatus = document.getElementById('status-missao');
 const cintoOrbital = document.querySelector('.orbita');
 
-// Variáveis de estado
 let imagensColetadas = 0;
 let cargaBateria = 5;
 let loopRastreamento;
 let missaoAtiva = false;
 
-// Variáveis de movimento do satélite
 let posicaoSatelite = 0;
 let vetorDirecaoSat = 1;
-let velocidadeSatelite = 15; // Velocidade inicial
+let velocidadeSatelite = 25;
 
-// Variáveis de movimento do alvo (Nova Mecânica)
-let posicaoAlvo = 100; // Posição inicial
+let posicaoAlvo = 100;
 let vetorDirecaoAlvo = 1;
-let velocidadeAlvo = 6; // Mais lento que o satélite para ser jogável
+let velocidadeAlvo = 12;
 
 function atualizarPainel() {
     painelSucesso.innerText = imagensColetadas;
@@ -34,7 +31,6 @@ function atualizarCenario() {
     const tamanhoSat = objSatelite.clientWidth;
     const tamanhoAlvo = zonaAlvo.clientWidth;
 
-    // 1. Move o Satélite
     posicaoSatelite += velocidadeSatelite * vetorDirecaoSat;
     if (posicaoSatelite >= larguraTotal - tamanhoSat) {
         vetorDirecaoSat = -1; 
@@ -43,7 +39,6 @@ function atualizarCenario() {
     }
     objSatelite.style.left = posicaoSatelite + 'px';
 
-    // 2. Move a Zona Alvo (Sua ideia aplicada)
     posicaoAlvo += velocidadeAlvo * vetorDirecaoAlvo;
     if (posicaoAlvo >= larguraTotal - tamanhoAlvo) {
         vetorDirecaoAlvo = -1;
@@ -56,7 +51,7 @@ function atualizarCenario() {
 function iniciarMissao() {
     imagensColetadas = 0;
     cargaBateria = 5;
-    velocidadeSatelite = 15; // Reseta a velocidade
+    velocidadeSatelite = 25;
     atualizarPainel();
     
     btnIniciar.style.display = 'none';
@@ -85,7 +80,6 @@ function realizarCaptura() {
         avisoStatus.innerText = "Leitura de NDVI realizada com sucesso!";
         avisoStatus.style.color = "#66fcf1";
         
-        // Aumenta a dificuldade (Satélite fica mais rápido a cada acerto)
         velocidadeSatelite += 4; 
     } else {
         avisoStatus.innerText = "Falha: Captura fora da zona florestal.";
@@ -112,12 +106,12 @@ function encerrarOperacao() {
     btnCapturar.style.display = 'none';
     btnReiniciar.style.display = 'inline-block';
     
-    if (imagensColetadas >= 3) {
-        avisoStatus.innerText = `Missão Concluída! ${imagensColetadas} lotes processados.`;
+    if (imagensColetadas === 5) {
+        avisoStatus.innerText = `Missão Perfeita! Você acertou todas as ${imagensColetadas} coletas!`;
         avisoStatus.style.color = "#66fcf1";
     } else {
-        avisoStatus.innerText = `Missão Falhou. Dados insuficientes (${imagensColetadas} coletas).`;
-        avisoStatus.style.color = "#c5c6c7";
+        avisoStatus.innerText = `Missão Falhou. Era preciso 100% de precisão. Acertos: ${imagensColetadas}/5.`;
+        avisoStatus.style.color = "#e74c3c";
     }
 }
 
