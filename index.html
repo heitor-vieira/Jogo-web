@@ -9,8 +9,29 @@
 <body>
     <div class="container">
         <h1>Missão de Captura: NDVI</h1>
-        <div id="status-missao">Carregando painel de controle...</div>
+        <p class="instrucoes">Instruções: Clique em "Capturar" exatamente quando o satélite sobrevoar a zona florestal para calcular o Índice de Vegetação. Você tem 5 janelas de tempo para conseguir 3 coletas bem-sucedidas.</p>
+        
+        <div class="painel">
+            <span>Coletas: <span id="coletas-sucesso">0</span></span>
+            <span>Janelas Restantes: <span id="bateria">5</span></span>
+        </div>
+
+        <div id="status-missao">Aguardando lançamento...</div>
+
+        <div class="orbita">
+            <div class="sensor">
+                <div class="zona-florestal" id="zona-alvo"></div>
+            </div>
+            <div class="satelite" id="satelite">🛰️</div>
+        </div>
+
+        <div class="controles">
+            <button id="btn-iniciar">Iniciar Órbita</button>
+            <button id="btn-capturar" disabled>Capturar Imagem</button>
+            <button id="btn-reiniciar" style="display: none;">Nova Missão</button>
+        </div>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
