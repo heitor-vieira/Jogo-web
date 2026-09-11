@@ -8,37 +8,55 @@ const painelBateria = document.getElementById('bateria');
 const avisoStatus = document.getElementById('status-missao');
 const cintoOrbital = document.querySelector('.orbita');
 
+// Variáveis de estado
 let imagensColetadas = 0;
 let cargaBateria = 5;
-let posicaoSatelite = 0;
-let vetorDirecao = 1;
 let loopRastreamento;
 let missaoAtiva = false;
-const velocidadeOrbita = 15;
+
+// Variáveis de movimento do satélite
+let posicaoSatelite = 0;
+let vetorDirecaoSat = 1;
+let velocidadeSatelite = 15; // Velocidade inicial
+
+// Variáveis de movimento do alvo (Nova Mecânica)
+let posicaoAlvo = 100; // Posição inicial
+let vetorDirecaoAlvo = 1;
+let velocidadeAlvo = 6; // Mais lento que o satélite para ser jogável
 
 function atualizarPainel() {
     painelSucesso.innerText = imagensColetadas;
     painelBateria.innerText = cargaBateria;
 }
 
-function atualizarOrbita() {
+function atualizarCenario() {
     const larguraTotal = cintoOrbital.clientWidth;
     const tamanhoSat = objSatelite.clientWidth;
+    const tamanhoAlvo = zonaAlvo.clientWidth;
 
-    posicaoSatelite += velocidadeOrbita * vetorDirecao;
-
+    // 1. Move o Satélite
+    posicaoSatelite += velocidadeSatelite * vetorDirecaoSat;
     if (posicaoSatelite >= larguraTotal - tamanhoSat) {
-        vetorDirecao = -1; 
+        vetorDirecaoSat = -1; 
     } else if (posicaoSatelite <= 0) {
-        vetorDirecao = 1; 
+        vetorDirecaoSat = 1; 
     }
-
     objSatelite.style.left = posicaoSatelite + 'px';
+
+    // 2. Move a Zona Alvo (Sua ideia aplicada)
+    posicaoAlvo += velocidadeAlvo * vetorDirecaoAlvo;
+    if (posicaoAlvo >= larguraTotal - tamanhoAlvo) {
+        vetorDirecaoAlvo = -1;
+    } else if (posicaoAlvo <= 0) {
+        vetorDirecaoAlvo = 1;
+    }
+    zonaAlvo.style.left = posicaoAlvo + 'px';
 }
 
 function iniciarMissao() {
     imagensColetadas = 0;
     cargaBateria = 5;
+    velocidadeSatelite = 15; // Reseta a velocidade
     atualizarPainel();
     
     btnIniciar.style.display = 'none';
@@ -48,7 +66,7 @@ function iniciarMissao() {
     avisoStatus.innerText = "Satélite em órbita. Aguarde o alinhamento...";
     missaoAtiva = true;
     
-    loopRastreamento = setInterval(atualizarOrbita, 30);
+    loopRastreamento = setInterval(atualizarCenario, 30);
 }
 
 function realizarCaptura() {
@@ -66,8 +84,11 @@ function realizarCaptura() {
         imagensColetadas++;
         avisoStatus.innerText = "Leitura de NDVI realizada com sucesso!";
         avisoStatus.style.color = "#66fcf1";
+        
+        // Aumenta a dificuldade (Satélite fica mais rápido a cada acerto)
+        velocidadeSatelite += 4; 
     } else {
-        avisoStatus.innerText = "Falha: Captura realizada sobre o oceano.";
+        avisoStatus.innerText = "Falha: Captura fora da zona florestal.";
         avisoStatus.style.color = "#c5c6c7";
     }
 
@@ -79,7 +100,7 @@ function realizarCaptura() {
             avisoStatus.innerText = "Recalibrando sensor para a próxima volta...";
             avisoStatus.style.color = "#45a29e";
             btnCapturar.disabled = false;
-            loopRastreamento = setInterval(atualizarOrbita, 30);
+            loopRastreamento = setInterval(atualizarCenario, 30);
         } else {
             encerrarOperacao();
         }
@@ -92,7 +113,7 @@ function encerrarOperacao() {
     btnReiniciar.style.display = 'inline-block';
     
     if (imagensColetadas >= 3) {
-        avisoStatus.innerText = `Missão Concluída! ${imagensColetadas} lotes de dados NDVI processados.`;
+        avisoStatus.innerText = `Missão Concluída! ${imagensColetadas} lotes processados.`;
         avisoStatus.style.color = "#66fcf1";
     } else {
         avisoStatus.innerText = `Missão Falhou. Dados insuficientes (${imagensColetadas} coletas).`;

@@ -92,6 +92,18 @@ button {
     text-transform: uppercase;
 }
 
+.zona-florestal {
+    position: absolute;
+    top: 0;
+    left: 40%;
+    width: 20%;
+    height: 100%;
+    background-color: rgba(102, 252, 241, 0.4);
+    border-left: 2px solid #66fcf1;
+    border-right: 2px solid #66fcf1;
+    transition: left 0.1s linear; /* Adicione apenas esta linha */
+}
+
 #btn-iniciar { background-color: #45a29e; color: #0b0c10; }
 #btn-capturar { background-color: #66fcf1; color: #0b0c10; }
 #btn-reiniciar { background-color: #c5c6c7; color: #0b0c10; }
