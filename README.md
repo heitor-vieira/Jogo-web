@@ -11,8 +11,6 @@ Captura Orbital é um simulador focado em sensoriamento remoto. O jogador deve a
 ## Instruções de Instalação e Execução
 O jogo roda inteiramente no lado do cliente. Não é necessário instalar nenhuma dependência. Clone o repositório e abra o arquivo `index.html` em qualquer navegador.
 
-Link para a versão publicada: [INSERIR SEU LINK DO GITHUB PAGES AQUI]
-
 ## Regras
 1. Clique em "Iniciar Órbita" para o satélite começar a se mover.
 2. Observe a trajetória do satélite (🛰️) no painel.
